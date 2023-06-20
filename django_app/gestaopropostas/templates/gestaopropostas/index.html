@@ -41,10 +41,17 @@
       cursor: pointer;
     }
   </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#id_cpf').mask('000.000.000-00');
+    });
+  </script>
 </head>
 <body>
   <h1>Formulário de Proposta</h1>
-  <form method="post">
+  <form method="post" action="/api/criar-proposta/">
     {% csrf_token %}
     {{ form.non_field_errors }}
     
@@ -64,7 +71,7 @@
     {{ form.valor_emprestimo }}
     {{ form.valor_emprestimo.errors }}
     
-    {% for custom_field in custom_fields %}
+    {% for custom_field in campos_adicionais %}
       <label for="custom_field_{{ custom_field.id }}">{{ custom_field.nome }}:</label>
       {% if custom_field.tipo_campo == 'string' %}
         <input type="text" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
@@ -82,3 +89,4 @@
   </form>
 </body>
 </html>
+

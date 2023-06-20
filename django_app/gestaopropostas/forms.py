@@ -1,4 +1,5 @@
 from django import forms
+from .models import CustomFields
 
 class PropostaForm(forms.Form):
     nome_completo = forms.CharField(label='Nome Completo', max_length=100)
@@ -14,6 +15,6 @@ class PropostaForm(forms.Form):
             if field.tipo_campo == 'string':
                 self.fields[field.nome] = forms.CharField(label=field.nome, max_length=100)
             elif field.tipo_campo == 'number':
-                self.fields[field.nome] = forms.DecimalField(label=field.nome)
+                self.fields[field.nome] = forms.DecimalField(label=field.nome, max_digits=100)
             elif field.tipo_campo == 'bool':
                 self.fields[field.nome] = forms.BooleanField(label=field.nome, required=False)
