@@ -1,49 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Empréstimos em Construção</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 24px;
-        }
-
-        p {
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .construction-img {
-            max-width: 200px;
-            margin-bottom: 20px;
-        }
-
-        .under-construction {
-            color: #999;
-            font-size: 18px;
-        }
-    </style>
+  <title>Formulário de Proposta</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    button[type="submit"] {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Empréstimos em Construção</h1>
-        <p class="under-construction">Desculpe-nos pelo transtorno!</p>
-        <p class="under-construction">Estamos trabalhando duro para criar a melhor experiência para você.</p>
-    </div>
+  <h1>Formulário de Proposta</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    <label for="{{ form.nome_completo.id_for_label }}">Nome Completo:</label>
+    {{ form.nome_completo }}
+    {{ form.nome_completo.errors }}
+    
+    <label for="{{ form.cpf.id_for_label }}">CPF:</label>
+    {{ form.cpf }}
+    {{ form.cpf.errors }}
+    
+    <label for="{{ form.endereco.id_for_label }}">Endereço:</label>
+    {{ form.endereco }}
+    {{ form.endereco.errors }}
+    
+    <label for="{{ form.valor_emprestimo.id_for_label }}">Valor do Empréstimo Pretendido:</label>
+    {{ form.valor_emprestimo }}
+    {{ form.valor_emprestimo.errors }}
+    
+    {% for custom_field in custom_fields %}
+      <label for="custom_field_{{ custom_field.id }}">{{ custom_field.nome }}:</label>
+      {% if custom_field.tipo_campo == 'string' %}
+        <input type="text" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
+      {% elif custom_field.tipo_campo == 'number' %}
+        <input type="number" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
+      {% elif custom_field.tipo_campo == 'bool' %}
+        <select name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
+          <option value="true">Sim</option>
+          <option value="false">Não</option>
+        </select>
+      {% endif %}
+    {% endfor %}
+    
+    <button type="submit">Enviar</button>
+  </form>
 </body>
 </html>
