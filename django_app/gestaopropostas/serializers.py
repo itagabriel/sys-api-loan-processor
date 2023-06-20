@@ -11,7 +11,8 @@ class PropostaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proposta
-        fields = ['id', 'nome_completo', 'cpf', 'endereco', 'valor_emprestimo', 'status', 'data_proposta', 'campos_adicionais']
+        fields = ['id', 'nome_completo', 'cpf', 'endereco', 'valor_emprestimo', 
+                  'status', 'data_proposta', 'campos_adicionais']
 
     def get_campos_adicionais(self, obj):
         campos_personalizados = obj.campos_adicionais.all()

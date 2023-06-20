@@ -3,7 +3,6 @@ from .forms import PropostaForm
 from .models import CustomFields, Proposta, CampoAdicional
 from .serializers import PropostaSerializer
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 
 def index(request):
     form = PropostaForm()
@@ -44,11 +43,5 @@ def criar_proposta(request):
     campos_adicionais = CampoAdicional.objects.filter(exibir_no_formulario=True)
     return render(request, 'gestaopropostas/criar_proposta.html', {'form': form, 'campos_adicionais': campos_adicionais})
 
-    # Obtenha todos os campos adicionais disponíveis
-    campos_adicionais = CampoAdicional.objects.filter(exibir_no_formulario=True)
-
-    return render(request, 'gestaopropostas/criar_proposta.html', {'form': form, 'campos_adicionais': campos_adicionais})
-
 def sucesso(request):
     return render(request, 'gestaopropostas/sucesso.html')
-
