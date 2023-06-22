@@ -1,3 +1,4 @@
+
 # Sistema de Gestão de Propostas de Empréstimo Pessoal
 
 Este é o README do projeto de um Sistema de Gestão de Propostas de Empréstimo Pessoal, desenvolvido como parte de um desafio técnico. O objetivo do projeto é criar um sistema onde os usuários possam cadastrar propostas de empréstimo pessoal e realizar sua avaliação através de uma fila RabbitMQ utilizando Django, Django Rest Framework e Django Celery.
@@ -71,6 +72,13 @@ Isso irá baixar as imagens necessárias, criar os containers e iniciar o sistem
 
 8. Para derrubar os containers na sua aplicação, utilize o comando a seguir no diretório do projeto:
 >* $ docker-compose down --volumes
+
+## Testes
+
+Foram implementados testes unitários para verificar o funcionamento correto dos campos do formulário. Para executar os testes, certifique-se de estar no diretório do projeto e execute o seguinte comando:
+
+>* $ docker exec -it django sh
+>* $ python manage.py test
 
 ## Autor
 
