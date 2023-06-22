@@ -23,9 +23,23 @@ services:
       - ./data/postgres/data:/var/lib/postgresql/data/
     env_file:
       - ./dotenv_files/.env
+
+  celery:
+    container_name: celery
+    build: .
+    command: celery -A django_project worker --loglevel=info
+    env_file:
+      - ./dotenv_files/.env
+    depends_on:
+      - django
+      - rabbitmq
+    
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management
+    restart: always
     ports:
       - 5672:5672
       - 15672:15672
+    env_file:
+      - ./dotenv_files/.env

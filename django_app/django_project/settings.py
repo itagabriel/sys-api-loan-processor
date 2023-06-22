@@ -135,6 +135,5 @@ MEDIA_ROOT = DATA_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672/'
-CELERY_RESULT_BACKEND = 'db+postgresql://sys_admin:sys_password@psql:5432/sys_gestao_proposta_emprestimo'
-
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'change-me'),
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'change-me'),

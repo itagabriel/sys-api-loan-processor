@@ -1,92 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Formulário de Proposta</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      padding: 20px;
-    }
-    h1 {
-      color: #333;
-    }
-    form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-    input[type="text"],
-    input[type="number"],
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      margin-bottom: 10px;
-    }
-    button[type="submit"] {
-      background-color: #4caf50;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#id_cpf').mask('000.000.000-00');
-    });
-  </script>
-</head>
-<body>
-  <h1>Formulário de Proposta</h1>
-  <form method="post" action="/api/criar-proposta/">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    
-    <label for="{{ form.nome_completo.id_for_label }}">Nome Completo:</label>
-    {{ form.nome_completo }}
-    {{ form.nome_completo.errors }}
-    
-    <label for="{{ form.cpf.id_for_label }}">CPF:</label>
-    {{ form.cpf }}
-    {{ form.cpf.errors }}
-    
-    <label for="{{ form.endereco.id_for_label }}">Endereço:</label>
-    {{ form.endereco }}
-    {{ form.endereco.errors }}
-    
-    <label for="{{ form.valor_emprestimo.id_for_label }}">Valor do Empréstimo Pretendido:</label>
-    {{ form.valor_emprestimo }}
-    {{ form.valor_emprestimo.errors }}
-    
-    {% for custom_field in campos_adicionais %}
-      <label for="custom_field_{{ custom_field.id }}">{{ custom_field.nome }}:</label>
-      {% if custom_field.tipo_campo == 'string' %}
-        <input type="text" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
-      {% elif custom_field.tipo_campo == 'number' %}
-        <input type="number" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
-      {% elif custom_field.tipo_campo == 'bool' %}
-        <select name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
-          <option value="true">Sim</option>
-          <option value="false">Não</option>
-        </select>
-      {% endif %}
-    {% endfor %}
-    
-    <button type="submit">Enviar</button>
-  </form>
-</body>
+  <head>
+    <title>Formulário de Proposta</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f5f5f5;
+          padding: 20px;
+        }
+        h1 {
+          color: #333;
+        }
+        form {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        label {
+          display: block;
+          margin-bottom: 10px;
+          font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          margin-bottom: 10px;
+        }
+        button[type="submit"] {
+          background-color: #4caf50;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        .btn-limpar {
+          background-color: #007bff; /* Azul */
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+      </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#id_cpf').mask('000.000.000-00');
+      });
+    </script> 
+  </head>
+  <body>
+    <h1>Formulário de Proposta</h1>
+      <form method="post" action="/api/criar-proposta/">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <label for="{{ form.nome_completo.id_for_label }}">Nome Completo:</label>
+        {{ form.nome_completo }}
+        {{ form.nome_completo.errors }}
+        
+        <label for="{{ form.cpf.id_for_label }}">CPF:</label>
+        {{ form.cpf }}
+        {{ form.cpf.errors }}
+        
+        <label for="{{ form.endereco.id_for_label }}">Endereço:</label>
+        {{ form.endereco }}
+        {{ form.endereco.errors }}
+        
+        <label for="{{ form.valor_emprestimo.id_for_label }}">Valor do Empréstimo Pretendido:</label>
+        {{ form.valor_emprestimo }}
+        {{ form.valor_emprestimo.errors }}
+        
+        {% for custom_field in campos_adicionais %}
+          <label for="custom_field_{{ custom_field.id }}">{{ custom_field.nome }}:</label>
+          {% if custom_field.tipo_campo == 'string' %}
+            <input type="text" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
+          {% elif custom_field.tipo_campo == 'number' %}
+            <input type="number" name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
+          {% elif custom_field.tipo_campo == 'bool' %}
+            <select name="custom_field_{{ custom_field.id }}" id="custom_field_{{ custom_field.id }}">
+              <option value="true">Sim</option>
+              <option value="false">Não</option>
+            </select>
+          {% endif %}
+        {% endfor %}
+        
+        <button type="submit">Enviar</button>
+        <button type="button" id="limpar" class="btn-limpar">Limpar</button>
+
+        <script>
+          // Código JavaScript para limpar os campos do formulário
+          $(document).ready(function() {
+            $('#limpar').click(function() {
+              // Limpar os campos do formulário
+              $('input[type="text"]').val('');
+              $('input[type="number"]').val('');
+              $('select').prop('selectedIndex', 0);
+            });
+          });
+        </script>
+      </form>
+  </body>
 </html>
 

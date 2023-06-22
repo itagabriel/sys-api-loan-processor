@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import PropostaForm
 from .models import CustomFields, Proposta, CampoAdicional
-from .serializers import PropostaSerializer
 from rest_framework.decorators import api_view
 
 def index(request):
@@ -41,7 +40,7 @@ def criar_proposta(request):
         form = PropostaForm()
 
     campos_adicionais = CampoAdicional.objects.filter(exibir_no_formulario=True)
-    return render(request, 'gestaopropostas/criar_proposta.html', {'form': form, 'campos_adicionais': campos_adicionais})
+    return render(request, 'gestaopropostas/index.html', {'form': form, 'campos_adicionais': campos_adicionais})
 
 def sucesso(request):
     return render(request, 'gestaopropostas/sucesso.html')

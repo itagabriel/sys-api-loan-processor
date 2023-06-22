@@ -1,4 +1,7 @@
 from django.db import models
+from .tasks import avaliar_proposta
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class CustomFields(models.Model):
     proposta = models.ForeignKey('Proposta', on_delete=models.CASCADE)
@@ -30,21 +33,28 @@ class CampoAdicional(models.Model):
         db_table = 'campo_adicional'
         verbose_name_plural = 'Campos Adicionais'
 
-
 class Proposta(models.Model):
+    STATUS_CHOICES = [
+        ('AN', 'Em análise'),
+        ('AP', 'Aprovada'),
+        ('RE', 'Reprovada'),
+    ]
+
     nome_completo = models.CharField(max_length=200)
     cpf = models.CharField(max_length=14)
     endereco = models.CharField(max_length=200)
     valor_emprestimo = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.BooleanField(default=False)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='AN')
     data_proposta = models.DateTimeField(auto_now_add=True)
     campos_adicionais = models.ManyToManyField(CampoAdicional, through=CustomFields)
 
     def get_status_display(self):
-        if self.status:
-            return "Aprovada"
-        else:
-            return "Negada"
+        return dict(self.STATUS_CHOICES)[self.status]
 
     def __str__(self):
         return self.nome_completo
+    
+@receiver(post_save, sender=Proposta)
+def processar_proposta(sender, instance, created, **kwargs):
+    if created:
+        avaliar_proposta.delay(instance.id)

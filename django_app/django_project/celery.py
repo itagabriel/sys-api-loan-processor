@@ -13,6 +13,6 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Carrega as tasks do projeto
 app.autodiscover_tasks()
 
-@app.task(bind=True, ignore_result=True)
+@app.task(bind=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')
