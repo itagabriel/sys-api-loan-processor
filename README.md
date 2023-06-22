@@ -43,32 +43,35 @@ https://docs.docker.com/engine/install/
 2. Acesse o diretório do projeto:
 >* $ cd sys-gestao-proposta-emprestimo
 
-3. Execute o comando a seguir para construir as imagens e iniciar os containers:
+3. Renomeando o arquivo de variáveis de ambiente:
+>* $ mv dotenv_files/.env-example dotenv_files/.env
+
+4. Execute o comando a seguir para construir as imagens e iniciar os containers:
 >* $ docker-compose build && docker-compose up -d
 >* $ docker-compose ps or docker ps (ambos os comandos irão listar os containers)
 
 Isso irá baixar as imagens necessárias, criar os containers e iniciar o sistema. Aguarde até que todos os serviços estejam prontos para uso.
 
-4. O sistema estará disponível nos seguintes endereços:
+5. O sistema estará disponível nos seguintes endereços:
 >* Aplicação Web (Formulário de Proposta): http://localhost:8000
 >* Administração do Django: http://localhost:8000/admin
 >Você pode acessar essas URLs em seu navegador para interagir com o sistema. 
->(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env-example)
+>(Verifique as credenciais do admin-django no arquivo: django_app\\credentials.txt)
 
 >* RabbitMQ Management: http://localhost:15672/
->(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env-example)
+>(Verifique as credenciais do RabbitMQ no arquivo: django_app\\credentials.txt)
 
-5. Para acessar a base de dados é necessário alguns comandos:
+6. Para acessar a base de dados é necessário alguns comandos:
 >* $ docker exec -it psql sh
 >* $ psql -U sys_admin -d sys_gestao_proposta_emprestimo -h psql -p 5432
 >*  Insira o password da base de dados
->(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env-example)
+>(Verifique as credenciais do PSQL no arquivo: django_app\\credentials.txt)
 
-6. Para encerrar a execução do sistema, utilize o comando a seguir no diretório do projeto:
+7. Para encerrar a execução do sistema, utilize o comando a seguir no diretório do projeto:
 
 >* $ docker-compose stop
 
-7. Para derrubar os containers na sua aplicação, utilize o comando a seguir no diretório do projeto:
+8. Para derrubar os containers na sua aplicação, utilize o comando a seguir no diretório do projeto:
 >* $ docker-compose down --volumes
 
 ## Autor
