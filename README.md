@@ -53,16 +53,16 @@ Isso irá baixar as imagens necessárias, criar os containers e iniciar o sistem
 >* Aplicação Web (Formulário de Proposta): http://localhost:8000
 >* Administração do Django: http://localhost:8000/admin
 >Você pode acessar essas URLs em seu navegador para interagir com o sistema. 
->(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env)
+>(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env-example)
 
 >* RabbitMQ Management: http://localhost:15672/
->(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env)
+>(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env-example)
 
 5. Para acessar a base de dados é necessário alguns comandos:
 >* $ docker exec -it psql sh
 >* $ psql -U sys_admin -d sys_gestao_proposta_emprestimo -h psql -p 5432
 >*  Insira o password da base de dados
->(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env)
+>(Verifique as credenciais do admin-django no arquivo: dotenv_files\\.env-example)
 
 6. Para encerrar a execução do sistema, utilize o comando a seguir no diretório do projeto:
 
