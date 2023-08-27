@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from .tasks import *
 from .forms import PropostaForm
 from .models import CustomFields, Proposta, CampoAdicional
 from rest_framework.decorators import api_view
@@ -33,6 +35,9 @@ def criar_proposta(request):
                 if valor:
                     campo_customizado = CustomFields(proposta=proposta, campo=campo_adicional, valor=valor)
                     campo_customizado.save()
+
+            # Função do django-celery que irá receber a proposta vindo da API Django
+            avaliar_proposta(proposta.id)
 
             # Redirecionar para a página de sucesso
             return redirect('/sucesso/')

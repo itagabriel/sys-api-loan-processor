@@ -32,7 +32,6 @@ services:
       - ./dotenv_files/.env
     depends_on:
       - django
-      - rabbitmq
     
   rabbitmq:
     container_name: rabbitmq

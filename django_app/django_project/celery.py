@@ -10,6 +10,9 @@ app = Celery('django_project')
 # Configura as opções do Celery
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
+# Configura tentativas de reconexão durante a inicialização
+app.conf.broker_connection_retry_on_startup = True
+
 # Carrega as tasks do projeto
 app.autodiscover_tasks()
 

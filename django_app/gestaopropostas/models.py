@@ -1,7 +1,4 @@
 from django.db import models
-from .tasks import avaliar_proposta
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 class CustomFields(models.Model):
     proposta = models.ForeignKey('Proposta', on_delete=models.CASCADE)
@@ -53,8 +50,3 @@ class Proposta(models.Model):
 
     def __str__(self):
         return self.nome_completo
-    
-@receiver(post_save, sender=Proposta)
-def processar_proposta(sender, instance, created, **kwargs):
-    if created:
-        avaliar_proposta.delay(instance.id)
