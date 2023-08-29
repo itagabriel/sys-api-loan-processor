@@ -16,6 +16,7 @@ services:
     depends_on:
       - psql
       - rabbitmq
+
   psql:
     container_name: psql
     image: postgres:13-alpine
@@ -26,12 +27,14 @@ services:
 
   celery:
     container_name: celery
-    build: .
+    build: 
+      context: .
     command: celery -A django_project worker --loglevel=info
     env_file:
       - ./dotenv_files/.env
     depends_on:
       - django
+      - psql
     
   rabbitmq:
     container_name: rabbitmq

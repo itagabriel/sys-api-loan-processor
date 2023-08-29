@@ -12,7 +12,9 @@ ENV PYTHONUNBUFFERED 1
 
 # Copia a pasta "djangoapp" e "scripts" para dentro do container.
 COPY django_app /django_app
-COPY script_sh /script_sh
+
+# Copia o arquivo entrypoint.sh para a pasta /docker-entrypoint
+COPY docker-entrypoint/entrypoint.sh /docker-entrypoint/entrypoint.sh
 
 # Entra na pasta djangoapp no container
 WORKDIR /django_app
@@ -37,14 +39,14 @@ RUN python -m venv /venv && \
   chown -R duser:duser /data/web/media && \
   chmod -R 755 /data/web/static && \
   chmod -R 755 /data/web/media && \
-  chmod -R +x /script_sh
+  chmod +x /docker-entrypoint/entrypoint.sh
 
-# Adiciona a pasta script_sh e venv/bin 
+# Adiciona a pasta docker-entrypoint e venv/bin 
 # no $PATH do container.
-ENV PATH="/script_sh:/venv/bin:$PATH"
+ENV PATH="/docker-entrypoint:/venv/bin:$PATH"
 
 # Muda o usuário para duser
 USER duser
 
-# Executa o arquivo script_sh/commands.sh
-CMD ["commands.sh"]
+# Executa o arquivo scripts/commands.sh
+ENTRYPOINT ["/docker-entrypoint/entrypoint.sh"]
